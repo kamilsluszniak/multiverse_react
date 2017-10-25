@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
 
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
@@ -71,7 +72,8 @@ function quotes(state = {
 // can be left split apart above
 const quotesApp = combineReducers({
   auth,
-  quotes
+  quotes,
+  routing: routerReducer
 })
 
 export default quotesApp
