@@ -14,11 +14,8 @@ export default class Navbar extends Component {
           <a className="navbar-brand" href="#">Quotes App</a>
           <div className='navbar-form'>
 
-            {!isAuthenticated &&
-              <Login
-                errorMessage={errorMessage}
-                onLoginClick={ creds => dispatch(loginUser(creds)) }
-              />
+            {isAuthenticated &&
+              <span>Logged in!</span>
             }
 
             {isAuthenticated &&

@@ -4,26 +4,37 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from './containers/App'
 import LoginPage from './containers/LoginPage'
-import thunkMiddleware from 'redux-thunk'
+import thunk from 'redux-thunk'
 import api from './middleware/api'
-import quotesApp from './reducers'
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import reducers from './reducers'
+import createHistory from 'history/createBrowserHistory'
+import {
+  ConnectedRouter as Router,
+  routerMiddleware
+} from 'react-router-redux'
+import {
+  Route,
+  Link
+} from 'react-router-dom'
 
-let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api)(createStore)
+const history = createHistory()
+const rMiddleware = routerMiddleware(history)
 
-let store = createStoreWithMiddleware(quotesApp)
-const history = syncHistoryWithStore(browserHistory, store)
+const store = createStore(
+  reducers,
+  applyMiddleware(thunk, rMiddleware, api)
+)
+
 
 let rootElement = document.getElementById('root')
 
 render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={App}>
-
-      </Route>
-      <Route path="/login" component={LoginPage}/>
+      <div>
+        <Route exact path="/" component={App}/>
+        <Route path="/login" component={LoginPage}/>
+      </div>
     </Router>
   </Provider>,
   rootElement

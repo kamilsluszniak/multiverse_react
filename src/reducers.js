@@ -70,10 +70,10 @@ function quotes(state = {
 
 // We combine the reducers here so that they
 // can be left split apart above
-const quotesApp = combineReducers({
+const reducers = combineReducers({
   auth,
   quotes,
   routing: routerReducer
 })
 
-export default quotesApp
+export default reducers

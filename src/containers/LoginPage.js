@@ -2,11 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import Login from '../components/Login'
 import { loginUser } from '../actions'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 class LoginPage extends Component {
 
   render() {
-    const { dispatch, errorMessage } = this.props
+    const { dispatch, errorMessage, isAuthenticated,history } = this.props
+
+    if (isAuthenticated) {
+      this.props.history.push('/')
+    }
 
     return (
       <nav className='navbar navbar-default'>
@@ -18,8 +23,6 @@ class LoginPage extends Component {
               errorMessage={errorMessage}
               onLoginClick={ creds => dispatch(loginUser(creds)) }
             />
-
-
 
           </div>
         </div>
@@ -37,7 +40,7 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
 
-  const { auth } = state
+  const { auth, history } = state
   const { isAuthenticated, errorMessage } = auth
 
   return {
@@ -46,4 +49,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(LoginPage)
+export default withRouter(connect(mapStateToProps)(LoginPage))
