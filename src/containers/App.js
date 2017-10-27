@@ -4,16 +4,18 @@ import { loginUser, fetchQuote, fetchSecretQuote } from '../actions'
 import Login from '../components/Login'
 import Navbar from '../components/Navbar'
 import Quotes from '../components/Quotes'
+import './App.css';
 
 class App extends Component {
   render() {
-    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote } = this.props
+    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email } = this.props
     return (
       <div>
         <Navbar
           isAuthenticated={isAuthenticated}
           errorMessage={errorMessage}
           dispatch={dispatch}
+          email={email}
         />
         <div className='container'>
           <Quotes
@@ -34,7 +36,8 @@ App.propTypes = {
   quote: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  isSecretQuote: PropTypes.bool.isRequired
+  isSecretQuote: PropTypes.bool.isRequired,
+  email: PropTypes.string
 }
 
 // These props come from the application's
@@ -43,13 +46,14 @@ function mapStateToProps(state) {
 
   const { quotes, auth } = state
   const { quote, authenticated } = quotes
-  const { isAuthenticated, errorMessage } = auth
+  const { isAuthenticated, errorMessage, email } = auth
 
   return {
     quote,
     isSecretQuote: authenticated,
     isAuthenticated,
-    errorMessage
+    errorMessage,
+    email
   }
 }
 
