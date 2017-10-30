@@ -5,9 +5,13 @@ function callApi(endpoint, authenticated) {
   let token = localStorage.getItem('access_token') || null
   let client = localStorage.getItem('client') || null
   let uid = localStorage.getItem('uid') || null
+  let expiry = localStorage.getItem('access_token_expire_at') || null
   let config = {}
+  let time = Date.now()/1000;
+  let token_valid = time < expiry ? true : false
 
-  if(authenticated) {
+
+  if(authenticated && token_valid) {
     if(token) {
       config = {
         headers: { 'access-token': `${token}`,

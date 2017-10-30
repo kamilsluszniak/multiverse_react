@@ -88,7 +88,9 @@ export function loginUser(creds) {
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
+
           localStorage.setItem('access_token', response.headers.get('access-token'))
+          localStorage.setItem('access_token_expire_at', response.headers.get('expiry'))
           localStorage.setItem('client', response.headers.get('client'))
           localStorage.setItem('uid', response.headers.get('uid'))
           // Dispatch the success action

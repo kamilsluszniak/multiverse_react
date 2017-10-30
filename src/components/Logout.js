@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import '../App.css'
 
 export default class Logout extends Component {
 
@@ -6,7 +7,7 @@ export default class Logout extends Component {
     const { onLogoutClick } = this.props
 
     return (
-      <button onClick={() => onLogoutClick()} className="btn btn-primary">
+      <button onClick={() => onLogoutClick()} className="btn btn-primary logout-button">
         Logout
       </button>
     )

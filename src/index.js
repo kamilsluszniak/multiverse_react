@@ -3,7 +3,9 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from './containers/App'
+import PlanetsIndex from './containers/PlanetsIndex'
 import LoginPage from './containers/LoginPage'
+
 import thunk from 'redux-thunk'
 import api from './middleware/api'
 import reducers from './reducers'
@@ -14,7 +16,8 @@ import {
 } from 'react-router-redux'
 import {
   Route,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom'
 
 const history = createHistory()
@@ -32,7 +35,8 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <div>
-        <Route exact path="/" component={App}/>
+        <Route path="/" component={App}/>
+          <Route path="/planets" component={PlanetsIndex}/>
         <Route path="/login" component={LoginPage}/>
       </div>
     </Router>

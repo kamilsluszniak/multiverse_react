@@ -47,6 +47,11 @@ section.press a {
   float: right;
 }
 
+.logout-button {
+  display: inline-block;
+  float: right;
+}
+
 section.press a:hover,
 section.press a.hover {
   background-color: #417cb8

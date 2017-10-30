@@ -4,11 +4,13 @@ import { loginUser, fetchQuote, fetchSecretQuote } from '../actions'
 import Login from '../components/Login'
 import Navbar from '../components/Navbar'
 import Quotes from '../components/Quotes'
-import './App.css';
+import NavigationPanel from '../components/NavigationPanel'
+
+import '../App.css'
 
 class App extends Component {
   render() {
-    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email } = this.props
+    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email, children } = this.props
     return (
       <div>
         <Navbar
@@ -17,14 +19,10 @@ class App extends Component {
           dispatch={dispatch}
           email={email}
         />
+        <NavigationPanel/>
         <div className='container'>
-          <Quotes
-            onQuoteClick={() => dispatch(fetchQuote())}
-            onSecretQuoteClick={() => dispatch(fetchSecretQuote())}
-            isAuthenticated={isAuthenticated}
-            quote={quote}
-            isSecretQuote={isSecretQuote}
-          />
+          <main>{this.props.children}</main>
+
         </div>
       </div>
     )
@@ -44,7 +42,7 @@ App.propTypes = {
 // state when it is started
 function mapStateToProps(state) {
 
-  const { quotes, auth } = state
+  const { quotes, auth, children } = state
   const { quote, authenticated } = quotes
   const { isAuthenticated, errorMessage, email } = auth
 
@@ -53,7 +51,8 @@ function mapStateToProps(state) {
     isSecretQuote: authenticated,
     isAuthenticated,
     errorMessage,
-    email
+    email,
+    children
   }
 }
 
