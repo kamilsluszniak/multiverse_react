@@ -10,13 +10,11 @@ export default class PlanetsIndex extends Component {
     const { dispatch } = this.props
 
     return (
-      <nav className='container'>
         <div className='container-fluid'>
           <div className="table">
             <h1>Planets Indexx</h1>
           </div>
         </div>
-      </nav>
     )
   }
 }

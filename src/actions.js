@@ -18,6 +18,9 @@ export const QUOTE_REQUEST = 'QUOTE_REQUEST'
 export const QUOTE_SUCCESS = 'QUOTE_SUCCESS'
 export const QUOTE_FAILURE = 'QUOTE_FAILURE'
 
+export const UPDATE_RESOURCES = 'UPDATE_RESOURCES'
+export const UPDATE_RESOURCES_SUCCESS = 'UPDATE_RESOURCES_SUCCESS'
+export const UPDATE_RESOURCES_FAILURE = 'UPDATE_RESOURCES_FAILURE'
 
 
 function requestLogin(creds) {
@@ -60,6 +63,15 @@ function receiveLogout() {
     type: LOGOUT_SUCCESS,
     isFetching: false,
     isAuthenticated: false
+  }
+}
+
+export function updateResources(planet){
+  return {
+    [CALL_API]: {
+      endpoint: `planets/${planet.id}/planet_info`,
+      types: [UPDATE_RESOURCES, UPDATE_RESOURCES_SUCCESS, UPDATE_RESOURCES_FAILURE]
+    }
   }
 }
 

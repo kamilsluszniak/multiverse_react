@@ -17,7 +17,8 @@ import {
 import {
   Route,
   Link,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom'
 
 const history = createHistory()
@@ -30,15 +31,30 @@ const store = createStore(
 
 
 let rootElement = document.getElementById('root')
+let state = store.getState()
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    store.getState().auth.isAuthenticated ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 
 render(
   <Provider store={store}>
     <Router history={history}>
-      <div>
-        <Route path="/" component={App}/>
-          <Route path="/planets" component={PlanetsIndex}/>
+      <Switch>
         <Route path="/login" component={LoginPage}/>
-      </div>
+        <PrivateRoute path="/" component={App}/>
+
+
+      </Switch>
     </Router>
   </Provider>,
   rootElement

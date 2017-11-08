@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:3001/'
 
-function callApi(endpoint, authenticated) {
+function callApi(endpoint, authenticated, params) {
 
   let token = localStorage.getItem('access_token') || null
   let client = localStorage.getItem('client') || null
@@ -11,7 +11,7 @@ function callApi(endpoint, authenticated) {
   let token_valid = time < expiry ? true : false
 
 
-  if(authenticated && token_valid) {
+  if(true){//authenticated && token_valid) {
     if(token) {
       config = {
         headers: { 'access-token': `${token}`,
@@ -23,7 +23,7 @@ function callApi(endpoint, authenticated) {
       throw "No token saved!"
     }
   }
-
+  console.log(config)
   return fetch(BASE_URL + endpoint, config)
     .then(response =>
       response.text().then(text => ({ text, response }))
@@ -31,7 +31,7 @@ function callApi(endpoint, authenticated) {
       if (!response.ok) {
         return Promise.reject(text)
       }
-
+      console.log(text)
       return text
     }).catch(err => console.log(err))
 }

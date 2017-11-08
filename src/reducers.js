@@ -3,7 +3,8 @@ import { routerReducer } from 'react-router-redux'
 
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
-  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE
+  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE, UPDATE_RESOURCES,
+  UPDATE_RESOURCES_SUCCESS, UPDATE_RESOURCES_FAILURE
 } from './actions'
 
 // The auth reducer. The starting state sets authentication
@@ -44,6 +45,33 @@ function auth(state = {
   }
 }
 
+function app(state = {
+    planetName: "",
+    metal: 0,
+    crystal: 0,
+    energy: 0,
+    hydrogen: 0
+  }, action) {
+  switch (action.type) {
+    case UPDATE_RESOURCES:
+      return Object.assign({}, state, {
+        resourcesUpdating: true
+      })
+    case UPDATE_RESOURCES_SUCCESS:
+    let response = JSON.parse(action.response)
+      return Object.assign({}, state, {
+        resourcesUpdating: false,
+        planetName: response.name,
+        metal: response.metal,
+        crystal: response.crystal,
+        energy: response.energy,
+        hydrogen: response.hydrogen
+      })
+    default:
+      return state
+    }
+}
+
 // The quotes reducer
 function quotes(state = {
     isFetching: false,
@@ -74,6 +102,7 @@ function quotes(state = {
 // can be left split apart above
 const reducers = combineReducers({
   auth,
+  app,
   quotes,
   routing: routerReducer
 })

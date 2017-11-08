@@ -5,12 +5,19 @@ import Login from '../components/Login'
 import Navbar from '../components/Navbar'
 import Quotes from '../components/Quotes'
 import NavigationPanel from '../components/NavigationPanel'
+import {
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom'
+import PlanetsIndex from '../containers/PlanetsIndex'
+
 
 import '../App.css'
 
 class App extends Component {
   render() {
-    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email, children } = this.props
+    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email, children, planetName } = this.props
     return (
       <div>
         <Navbar
@@ -18,10 +25,14 @@ class App extends Component {
           errorMessage={errorMessage}
           dispatch={dispatch}
           email={email}
+          planetName={planetName}
         />
         <NavigationPanel/>
-        <div className='container'>
-          <main>{this.props.children}</main>
+        <div className='main-container'>
+          <main>
+            <Route path="/planets" component={PlanetsIndex}/>
+
+          </main>
 
         </div>
       </div>
@@ -35,16 +46,18 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   isSecretQuote: PropTypes.bool.isRequired,
-  email: PropTypes.string
+  email: PropTypes.string,
+  planetName: PropTypes.string
 }
 
 // These props come from the application's
 // state when it is started
 function mapStateToProps(state) {
 
-  const { quotes, auth, children } = state
+  const { quotes, auth, children, app } = state
   const { quote, authenticated } = quotes
   const { isAuthenticated, errorMessage, email } = auth
+  const { planetName } = app
 
   return {
     quote,
@@ -52,7 +65,8 @@ function mapStateToProps(state) {
     isAuthenticated,
     errorMessage,
     email,
-    children
+    children,
+    planetName
   }
 }
 

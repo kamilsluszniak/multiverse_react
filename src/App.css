@@ -63,3 +63,17 @@ section.press a.active {
   box-shadow: 0 5px #27496d;
   transform: translateY(5px);
 }
+
+.navigation-panel{
+  display: inline-block;
+  border: 2px solid black;
+}
+
+.navigation-button{
+  display: block;
+  padding: 10px 15px;
+}
+
+.main-container{
+  display: inline-block;
+}

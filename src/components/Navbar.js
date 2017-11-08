@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Login from './Login'
 import Logout from './Logout'
-import { loginUser, logoutUser } from '../actions'
+import { loginUser, logoutUser, updateResources } from '../actions'
 import {
   Route,
   Link
@@ -10,7 +10,7 @@ import {
 export default class Navbar extends Component {
 
   render() {
-    const { dispatch, isAuthenticated, errorMessage, email } = this.props
+    const { dispatch, isAuthenticated, errorMessage, email, planetName } = this.props
 
     return (
       <nav className='navbar navbar-default'>
@@ -21,9 +21,9 @@ export default class Navbar extends Component {
               <section className="press">
 
                 {isAuthenticated &&
-                  <span>Logged in as {this.props.email}</span>
+                  (<div><span>Logged in as {this.props.email}</span><a onClick={() => dispatch(updateResources({id: 1}))}>resources</a></div>)
                 }
-
+                {console.log(planetName)}
                 {isAuthenticated ? <Logout onLogoutClick={() => dispatch(logoutUser())} /> : <Link to={`/login`} className="login-button">Log in</Link>}
 
               </section>
@@ -39,5 +39,6 @@ Navbar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  email: PropTypes.string
+  email: PropTypes.string,
+  planetName: PropTypes.string
 }
