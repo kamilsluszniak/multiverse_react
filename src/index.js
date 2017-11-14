@@ -31,11 +31,11 @@ const store = createStore(
 
 
 let rootElement = document.getElementById('root')
-let state = store.getState()
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    store.getState().auth.isAuthenticated ? (
+    store.getState().app.isAuthenticated ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -45,6 +45,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   )}/>
 )
+console.log(store.getState())
 
 render(
   <Provider store={store}>

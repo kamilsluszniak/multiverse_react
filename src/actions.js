@@ -22,6 +22,10 @@ export const UPDATE_RESOURCES = 'UPDATE_RESOURCES'
 export const UPDATE_RESOURCES_SUCCESS = 'UPDATE_RESOURCES_SUCCESS'
 export const UPDATE_RESOURCES_FAILURE = 'UPDATE_RESOURCES_FAILURE'
 
+export const GET_PLANETS = 'GET_PLANETS'
+export const GET_PLANETS_SUCCESS = 'GET_PLANETS_SUCCESS'
+export const GET_PLANETS_FAILURE = 'GET_PLANETS_FAILURE'
+
 
 function requestLogin(creds) {
   return {
@@ -74,6 +78,16 @@ export function updateResources(planet){
     }
   }
 }
+
+export function getPlanetsIndex(){
+  return {
+    [CALL_API]: {
+      endpoint: `planets`,
+      types: [GET_PLANETS, GET_PLANETS_SUCCESS, GET_PLANETS_FAILURE]
+    }
+  }
+}
+
 
 // Calls the API to get a token and
 // dispatches actions along the way

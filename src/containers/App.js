@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { loginUser, fetchQuote, fetchSecretQuote } from '../actions'
+import { loginUser } from '../actions'
 import Login from '../components/Login'
 import Navbar from '../components/Navbar'
-import Quotes from '../components/Quotes'
 import NavigationPanel from '../components/NavigationPanel'
 import {
   Route,
@@ -17,7 +16,12 @@ import '../App.css'
 
 class App extends Component {
   render() {
-    const { dispatch, quote, isAuthenticated, errorMessage, isSecretQuote, email, children, planetName } = this.props
+    const { dispatch, isAuthenticated, errorMessage, email, planetName, planetId, metal, crystal, hydrogen, energy } = this.props
+
+    if (!isAuthenticated) {
+      this.props.history.push('/login')
+    }
+
     return (
       <div>
         <Navbar
@@ -26,11 +30,15 @@ class App extends Component {
           dispatch={dispatch}
           email={email}
           planetName={planetName}
+          metal={metal}
+          crystal={crystal}
+          hydrogen={hydrogen}
+          energy={energy}
         />
         <NavigationPanel/>
         <div className='main-container'>
           <main>
-            <Route path="/planets" component={PlanetsIndex}/>
+            <Route path="/planets" render={(props) => <PlanetsIndex {...props} dispatch={dispatch}/>}/>
 
           </main>
 
@@ -42,10 +50,8 @@ class App extends Component {
 
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  quote: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  isSecretQuote: PropTypes.bool.isRequired,
   email: PropTypes.string,
   planetName: PropTypes.string
 }
@@ -54,19 +60,19 @@ App.propTypes = {
 // state when it is started
 function mapStateToProps(state) {
 
-  const { quotes, auth, children, app } = state
-  const { quote, authenticated } = quotes
-  const { isAuthenticated, errorMessage, email } = auth
-  const { planetName } = app
+  const { app } = state
+  const { planetName, planetId, metal, crystal, hydrogen, energy, isAuthenticated, errorMessage, email } = app
 
   return {
-    quote,
-    isSecretQuote: authenticated,
     isAuthenticated,
     errorMessage,
     email,
-    children,
-    planetName
+    planetName,
+    planetId,
+    metal,
+    crystal,
+    hydrogen,
+    energy
   }
 }
 

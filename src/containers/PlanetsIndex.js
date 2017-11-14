@@ -3,8 +3,14 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import { getPlanetsIndex } from '../actions'
 
 export default class PlanetsIndex extends Component {
+
+  componentDidMount() {
+
+    this.props.dispatch(getPlanetsIndex())
+  }
 
   render() {
     const { dispatch } = this.props

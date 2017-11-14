@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 class LoginPage extends Component {
 
   render() {
-    const { dispatch, errorMessage, isAuthenticated,history } = this.props
+    const { dispatch, errorMessage, isAuthenticated } = this.props
 
     if (isAuthenticated) {
       this.props.history.push('/')
@@ -40,8 +40,8 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
 
-  const { auth, history } = state
-  const { isAuthenticated, errorMessage } = auth
+  const { app, history } = state
+  const { isAuthenticated, errorMessage } = app
 
   return {
     isAuthenticated,
