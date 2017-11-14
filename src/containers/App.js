@@ -16,7 +16,7 @@ import '../App.css'
 
 class App extends Component {
   render() {
-    const { dispatch, isAuthenticated, errorMessage, email, planetName, planetId, metal, crystal, hydrogen, energy } = this.props
+    const { dispatch, isAuthenticated, errorMessage, email, planetName, planetId, metal, crystal, hydrogen, energy, planets } = this.props
 
     if (!isAuthenticated) {
       this.props.history.push('/login')
@@ -38,7 +38,7 @@ class App extends Component {
         <NavigationPanel/>
         <div className='main-container'>
           <main>
-            <Route path="/planets" render={(props) => <PlanetsIndex {...props} dispatch={dispatch}/>}/>
+            <Route path="/planets" render={(props) => <PlanetsIndex {...props} dispatch={dispatch} planets={planets}/>}/>
 
           </main>
 
@@ -61,7 +61,7 @@ App.propTypes = {
 function mapStateToProps(state) {
 
   const { app } = state
-  const { planetName, planetId, metal, crystal, hydrogen, energy, isAuthenticated, errorMessage, email } = app
+  const { planetName, planetId, metal, crystal, hydrogen, energy, isAuthenticated, errorMessage, email, planets } = app
 
   return {
     isAuthenticated,
@@ -72,7 +72,8 @@ function mapStateToProps(state) {
     metal,
     crystal,
     hydrogen,
-    energy
+    energy,
+    planets
   }
 }
 

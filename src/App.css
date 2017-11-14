@@ -52,6 +52,10 @@ section.press a {
   float: right;
 }
 
+a{
+    cursor:pointer;
+}
+
 section.press a:hover,
 section.press a.hover {
   background-color: #417cb8

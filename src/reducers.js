@@ -66,7 +66,7 @@ function app(state = {
       console.log(response)
       return Object.assign({}, state, {
         resourcesUpdating: false,
-        planetName: response.name
+        planets: response
 
       })
     case GET_PLANETS_FAILURE:

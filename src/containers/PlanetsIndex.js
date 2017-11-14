@@ -4,6 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 import { getPlanetsIndex } from '../actions'
+import Planets from '../components/Planets'
 
 export default class PlanetsIndex extends Component {
 
@@ -13,12 +14,13 @@ export default class PlanetsIndex extends Component {
   }
 
   render() {
-    const { dispatch } = this.props
+    const { dispatch, planets } = this.props
 
     return (
         <div className='container-fluid'>
           <div className="table">
             <h1>Planets Indexx</h1>
+            {planets && <Planets planets={planets} dispatch={dispatch}/>}
           </div>
         </div>
     )
