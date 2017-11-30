@@ -14,18 +14,17 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
 
-export const QUOTE_REQUEST = 'QUOTE_REQUEST'
-export const QUOTE_SUCCESS = 'QUOTE_SUCCESS'
-export const QUOTE_FAILURE = 'QUOTE_FAILURE'
-
-export const UPDATE_RESOURCES = 'UPDATE_RESOURCES'
 export const UPDATE_RESOURCES_SUCCESS = 'UPDATE_RESOURCES_SUCCESS'
 export const UPDATE_RESOURCES_FAILURE = 'UPDATE_RESOURCES_FAILURE'
 
-export const GET_PLANETS = 'GET_PLANETS'
 export const GET_PLANETS_SUCCESS = 'GET_PLANETS_SUCCESS'
 export const GET_PLANETS_FAILURE = 'GET_PLANETS_FAILURE'
 
+export const PLANET_SELECT_SUCCESS = 'PLANET_SELECT_SUCCESS'
+export const PLANET_SELECT_FAILURE = 'PLANET_SELECT_FAILURE'
+
+export const SHOW_OBJECT_SUCCESS = 'SHOW_OBJECT_SUCCESS'
+export const SHOW_OBJECT_FAILURE = 'SHOW_OBJECT_FAILURE'
 
 function requestLogin(creds) {
   return {
@@ -74,7 +73,16 @@ export function updateResources(planet){
   return {
     [CALL_API]: {
       endpoint: `planets/${planet.id}/planet_info`,
-      types: [UPDATE_RESOURCES, UPDATE_RESOURCES_SUCCESS, UPDATE_RESOURCES_FAILURE]
+      types: [UPDATE_RESOURCES_SUCCESS, UPDATE_RESOURCES_FAILURE]
+    }
+  }
+}
+
+export function selectPlanetAndUpdateResources(planet){
+  return {
+    [CALL_API]: {
+      endpoint: `planets/${planet.id}/planet_info`,
+      types: [PLANET_SELECT_SUCCESS, PLANET_SELECT_FAILURE]
     }
   }
 }
@@ -83,7 +91,16 @@ export function getPlanetsIndex(){
   return {
     [CALL_API]: {
       endpoint: `planets`,
-      types: [GET_PLANETS, GET_PLANETS_SUCCESS, GET_PLANETS_FAILURE]
+      types: [GET_PLANETS_SUCCESS, GET_PLANETS_FAILURE]
+    }
+  }
+}
+
+export function showObject(planetId, object){
+  return {
+    [CALL_API]: {
+      endpoint: `show_object`,
+      types: [SHOW_OBJECT_SUCCESS, SHOW_OBJECT_FAILURE]
     }
   }
 }
@@ -114,7 +131,6 @@ export function loginUser(creds) {
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
-
           localStorage.setItem('access_token', response.headers.get('access-token'))
           localStorage.setItem('access_token_expire_at', response.headers.get('expiry'))
           localStorage.setItem('client', response.headers.get('client'))
@@ -133,28 +149,5 @@ export function logoutUser() {
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
     dispatch(receiveLogout())
-  }
-}
-
-// Uses the API middlware to get a quote
-export function fetchQuote() {
-  return {
-    [CALL_API]: {
-      endpoint: 'random-quote',
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-    }
-  }
-}
-
-// Same API middlware is used to get a
-// secret quote, but we set authenticated
-// to true so that the auth header is sent
-export function fetchSecretQuote() {
-  return {
-    [CALL_API]: {
-      endpoint: 'protected/random-quote',
-      authenticated: true,
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-    }
   }
 }

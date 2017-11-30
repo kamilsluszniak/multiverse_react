@@ -10,7 +10,9 @@ function callApi(endpoint, params) {
   let time = Date.now()/1000;
   let token_valid = time < expiry ? true : false
 
-
+  console.log("token: " + token)
+  console.log("client: " + client)
+  console.log("uid: " + uid)
   if(token && token_valid) {
     if(token) {
       config = {
@@ -31,6 +33,9 @@ function callApi(endpoint, params) {
         return Promise.reject(new Error(text))
       }
       else{
+        console.log(response.headers.get('access-token'))
+        console.log(response.headers.get('client'))
+        console.log(response.headers.get('uid'))
         localStorage.setItem('access_token', response.headers.get('access-token'))
       }
       return text
@@ -50,7 +55,7 @@ export default store => next => action => {
 
   let { endpoint, types } = callAPI
 
-  const [ requestType, successType, errorType ] = types
+  const [ successType, errorType ] = types
   // Passing the authenticated boolean back in our data will let us distinguish between normal and secret quotes
   return callApi(endpoint).then(
     response =>

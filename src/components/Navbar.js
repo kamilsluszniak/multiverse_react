@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import Login from './Login'
 import Logout from './Logout'
 import { loginUser, logoutUser, updateResources } from '../actions'
@@ -6,11 +6,12 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 export default class Navbar extends Component {
 
   render() {
-    const { dispatch, isAuthenticated, errorMessage, email, planetName, metal, crystal, hydrogen, energy } = this.props
+    const { dispatch, isAuthenticated, errorMessage, email, planetName, metal, crystal, hydrogen, energy, planet} = this.props
 
     return (
       <nav className='navbar navbar-default'>
@@ -19,15 +20,14 @@ export default class Navbar extends Component {
             <a className="navbar-brand" href="#">MULTIVERSE</a>
             <div className='navbar-form'>
               <section className="press">
-                {planetName &&
-                  <span>Planet {this.props.planetName}</span>
+                {planet &&
+                  <span>Planet {planet.name}</span>
                 }
 
 
                 {isAuthenticated &&
-                  (<div><span>Logged in as {this.props.email}</span><Resources metal={metal} crystal={crystal} hydrogen={hydrogen} energy={energy}/><a onClick={() => dispatch(updateResources({id: 1}))}>resources</a></div>)
+                  (<div><span>Logged in as {this.props.email}</span><Resources metal={metal} crystal={crystal} hydrogen={hydrogen} energy={energy}/></div>)
                 }
-                {console.log(planetName)}
                 {isAuthenticated ? <Logout onLogoutClick={() => dispatch(logoutUser())} /> : <Link to={`/login`} className="login-button">Log in</Link>}
 
               </section>
